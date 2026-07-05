@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lifetime Fitness Gym — The Luxury Fitness Studio | Muzaffarpur</title>
+  <meta name="description" content="Muzaffarpur's most premium fitness studio. World-class training, elite coaches, luxury facilities. Your transformation starts here." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <!-- Fonts: Clash Display + Satoshi from Fontshare -->
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- GSAP + ScrollTrigger for premium animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <style>
+    /* ══════════════════════════════════════════════
+       DESIGN SYSTEM — TOKENS
+       ══════════════════════════════════════════════ */
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-elevated: #111111;
+      --bg-card: #161616;
+      --bg-card-hover: #1a1a1a;
+      --text-primary: #F0EDE6;
+      --text-secondary: #8A8A8A;
+      --text-muted: #555555;
+      --gold: #C9A227;
+      --gold-light: #E5C97B;
+      --gold-dark: #8B6F14;
+      --gradient-gold: linear-gradient(135deg, #C9A227 0%, #E5C97B 50%, #C9A227 100%);
+      --cta: #B20000;
+      --cta-hover: #D40000;
+      --cta-glow: rgba(178, 0, 0, 0.5);
+      --font-display: 'Clash Display', sans-serif;
+      --font-body: 'Satoshi', sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 32px;
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 2rem;
+      --space-lg: 4rem;
+      --space-xl: 6rem;
+      --space-2xl: 10rem;
+    }
+    /* ══════════════════════════════════════════════
+       RESET & BASE
+       ══════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, video { max-width: 100%; display: block; }
+    button { font-family: var(--font-body); cursor: pointer; border: none; }
+    ::selection {
+      background: var(--gold);
+      color: var(--bg-primary);
+    }
+    /* ══════════════════════════════════════════════
+       CSS NOISE TEXTURE (no external asset)
+       ══════════════════════════════════════════════ */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px 128px;
+    }
+    /* ══════════════════════════════════════════════
+       LAYOUT UTILITIES
+       ══════════════════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+    }
+    .section {
+      padding: var(--space-2xl) 0;
+      position: relative;
+    }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: var(--space-md);
+    }
+    .section-title .gold {
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .body-text {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    /* ══════════════════════════════════════════════
+       CURSOR GLOW
+       ══════════════════════════════════════════════ */
+    #cursorGlow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 162, 39, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s var(--ease-out-expo), height 0.4s var(--ease-out-expo), opacity 0.4s;
+      will-change: left, top;
+      opacity: 0;
+    }
+    #cursorGlow.active { opacity: 1; }
+    #cursorGlow.expand {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(178, 0, 0, 0.12) 0%, transparent 70%);
+    }
+    /* ══════════════════════════════════════════════
+       HEADER / NAV
+       ══════════════════════════════════════════════ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1.5rem 0;
+      transition: all 0.5s var(--ease-out-expo);
+    }
+    .header.scrolled {
+      padding: 0.8rem 0;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(201, 162, 39, 0.08);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.4s var(--ease-out-expo);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      font-family: var(--font-display) !important;
+      font-size: 0.85rem !important;
+      font-weight: 500 !important;
+      color: var(--bg-primary) !important;
+      background: var(--gradient-gold);
+      padding: 0.6rem 1.5rem;
+      border-radius: 100px;
+      transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s;
+    }
+    .nav-cta:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(201, 162, 39, 0.3);
+    }
+    .nav-cta::after { display: none !important; }
+    /* Mobile menu toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 4px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: 0.3s;
+    }
+    /* ══════════════════════════════════════════════
+       HERO
+       ══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Cinematic overlays */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(180deg,
+          rgba(10,10,10,0.3) 0%,
+          rgba(10,10,10,0.1) 30%,
+          rgba(10,10,10,0.4) 60%,
+          rgba(10,10,10,0.95) 100%
+        );
+    }
+    .hero-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.05) 0%, transparent 50%);
+      mix-blend-mode: overlay;
+    }
+    /* Vignette */
+    .hero-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(10,10,10,0.6) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-bottom: clamp(4rem, 8vh, 8rem);
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 50px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 2rem;
+      max-width: 900px;
+    }
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+    .hero-title .line-inner {
+      display: block;
+      transform: translateY(110%);
+    }
+    .hero-title .line:nth-child(2) .line-inner {
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-bottom {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      opacity: 0;
+    }
+    .hero-cta-wrap {
+      position: relative;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 2.2rem;
+      background: var(--cta);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--cta), #ff3333, var(--cta));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .hero-cta:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 60px var(--cta-glow), 0 0 120px rgba(178, 0, 0, 0.2);
+    }
+    .hero-cta:hover::before { opacity: 1; }
+    .hero-cta .arrow {
+      display: inline-block;
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+    .hero-cta:hover .arrow {
+      transform: translateX(4px);
+    }
+    /* Gold outline CTA overlay */
+    .hero-cta-outline {
+      position: absolute;
+      inset: -3px;
+      border: 1px solid rgba(201, 162, 39, 0.25);
+      border-radius: 100px;
+      pointer-events: none;
+      animation: ctaPulse 3s ease-in-out infinite;
+    }
+    @keyframes ctaPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.08); opacity: 0; }
+    }
+    .rating-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 100px;
+      backdrop-filter: blur(10px);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .rating-pill .stars {
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+    .rating-pill .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255,255,255,0.15);
+    }
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      right: clamp(1.5rem, 4vw, 3rem);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+    }
+    .hero-scroll-indicator span {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gold);
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+    /* ══════════════════════════════════════════════
+       MARQUEE
+       ══════════════════════════════════════════════ */
+    .marquee-section {
+      padding: 1.2rem 0;
+      border-top: 1px solid rgba(201, 162, 39, 0.1);
+      border-bottom: 1px solid rgba(201, 162, 39, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 25s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+    .marquee-item {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      transition: color 0.3s;
+    }
+    .marquee-item:hover {
+      color: var(--gold);
+    }
+    .marquee-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    /* ══════════════════════════════════════════════
+       ABOUT
+       ══════════════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: center;
+    }
+    .about-text-col { padding-right: 2rem; }
+    .about-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .about-stats {
+      display: flex;
+      gap: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-stat-number {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 2.5rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .about-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+    .about-image-col {
+      position: relative;
+    }
+    .about-image-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+    .about-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%) contrast(1.1);
+      transition: all 0.8s var(--ease-out-expo);
+    }
+    .about-image-wrap:hover img {
+      filter: grayscale(0%) contrast(1.15);
+      transform: scale(1.03);
+    }
+    .about-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.6s;
+      mix-blend-mode: overlay;
+    }
+    .about-image-wrap:hover::after {
+      opacity: 1;
+    }
+    /* Gold accent frame */
+    .about-image-col::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 60%;
+      height: 60%;
+      border: 1px solid rgba(201, 162, 39, 0.15);
+      border-radius: var(--radius-lg);
+      z-index: -1;
+    }
+    /* ══════════════════════════════════════════════
+       FACILITIES
+       ══════════════════════════════════════════════ */
+    .facilities-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .facilities-scroll {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 1rem;
+      scrollbar-width: none;
+    }
+    .facilities-scroll::-webkit-scrollbar { display: none; }
+    .facility-card {
+      min-width: 340px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .facility-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(80%) brightness(0.7);
+      transition: all 0.8s var(--ease-out-expo);
+    }
+    .facility-card:hover img {
+      filter: grayscale(0%) brightness(0.85);
+      transform: scale(1.08);
+    }
+    .facility-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      transition: background 0.5s;
+    }
+    .facility-card:hover .facility-card-overlay {
+      background: linear-gradient(180deg, rgba(201, 162, 39, 0.05) 0%, rgba(10,10,10,0.95) 100%);
+    }
+    .facility-number {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 4rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s var(--ease-out-expo);
+      line-height: 1;
+    }
+    .facility-card:hover .facility-number {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .facility-name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.5rem;
+      margin-top: 0.3rem;
+      transition: color 0.3s;
+    }
+    .facility-card:hover .facility-name {
+      color: var(--gold-light);
+    }
+    .facility-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s var(--ease-out-expo);
+    }
+    .facility-card:hover .facility-desc {
+      max-height: 60px;
+    }
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    .stat-item:hover {
+      background: rgba(201, 162, 39, 0.04);
+      border-color: rgba(201, 162, 39, 0.12);
+      transform: translateY(-4px);
+    }
+    .stat-number {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 0.5rem;
+    }
+    /* ══════════════════════════════════════════════
+       TRAINERS
+       ══════════════════════════════════════════════ */
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .trainer-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .trainer-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      transition: all 0.8s var(--ease-out-expo);
+    }
+    .trainer-card:hover img {
+      filter: grayscale(0%) contrast(1.1);
+      transform: scale(1.05);
+    }
+    .trainer-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(10,10,10,0.95) 100%);
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.5s var(--ease-out-expo);
+    }
+    .trainer-card:hover .trainer-info {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .trainer-name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.4rem;
+    }
+    .trainer-role {
+      font-size: 0.8rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 0.3rem;
+    }
+    .trainer-gold-bar {
+      width: 30px;
+      height: 2px;
+      background: var(--gradient-gold);
+      margin-top: 0.8rem;
+    }
+    /* ══════════════════════════════════════════════
+       TESTIMONIALS
+       ══════════════════════════════════════════════ */
+    .testimonials-section {
+      background: var(--bg-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonials-section::before {
+      content: '\201C';
+      font-family: var(--font-display);
+      font-size: 30rem;
+      color: rgba(201, 162, 39, 0.03);
+      position: absolute;
+      top: -5rem;
+      right: 5%;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.5s var(--ease-out-expo);
+      transform-style: preserve-3d;
+      will-change: transform, box-shadow;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(201, 162, 39, 0.15);
+      background: var(--bg-card-hover);
+    }
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1.5rem;
+    }
+    .testimonial-stars span {
+      color: var(--gold);
+      font-size: 0.9rem;
+    }
+    .testimonial-quote {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gradient-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--bg-primary);
+    }
+    .testimonial-author-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .testimonial-author-detail {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    /* ══════════════════════════════════════════════
+       CTA BANNER
+       ══════════════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(178, 0, 0, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section .section-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+    .cta-phone {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      margin-top: 1.5rem;
+    }
+    .cta-phone a {
+      color: var(--gold);
+      transition: color 0.3s;
+    }
+    .cta-phone a:hover {
+      color: var(--gold-light);
+    }
+    .cta-big-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 3rem;
+      background: var(--cta);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+    }
+    .cta-big-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 80px var(--cta-glow), 0 10px 40px rgba(0,0,0,0.4);
+    }
+    /* ══════════════════════════════════════════════
+       CONTACT / MAP
+       ══════════════════════════════════════════════ */
+    .contact-section {
+      background: var(--bg-elevated);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+    .map-wrap {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      position: relative;
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(80%) invert(92%) contrast(90%) brightness(0.7);
+    }
+    .map-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(201, 162, 39, 0.1);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .contact-info-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+    }
+    .contact-item {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      align-items: flex-start;
+    }
+    .contact-item:last-child { margin-bottom: 0; }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(201, 162, 39, 0.08);
+      border: 1px solid rgba(201, 162, 39, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-item-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .contact-item-value {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .contact-item-value a {
+      color: var(--text-primary);
+      transition: color 0.3s;
+    }
+    .contact-item-value a:hover {
+      color: var(--gold);
+    }
+    /* ══════════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════════ */
+    .footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(201, 162, 39, 0.1);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .footer-socials {
+      display: flex;
+      gap: 1rem;
+    }
+    .footer-social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+    .footer-social-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    /* ══════════════════════════════════════════════
+       WHATSAPP FLOATING BUTTON
+       ══════════════════════════════════════════════ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+    }
+    .whatsapp-float svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+    }
+    .whatsapp-float::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(37, 211, 102, 0.3);
+      animation: whatsappPulse 2s ease-in-out infinite;
+    }
+    @keyframes whatsappPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0; }
+    }
+    /* ══════════════════════════════════════════════
+       REVEAL ANIMATIONS (base states)
+       ══════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 1s var(--ease-out-expo);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: all 1s var(--ease-out-expo);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: all 1s var(--ease-out-expo);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+       ══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-text-col { padding-right: 0; }
+      .about-image-col::before { display: none; }
+      .trainers-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: 0;
+        background: rgba(10,10,10,0.97);
+        backdrop-filter: blur(20px);
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        z-index: 999;
+      }
+      .nav-links.open a { font-size: 1.5rem; }
+      .menu-toggle { display: flex; z-index: 1001; }
+      .trainers-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .facility-card { min-width: 280px; }
+      .hero-bottom { gap: 1.5rem; }
+      .about-stats { flex-wrap: wrap; gap: 2rem; }
+      #cursorGlow { display: none; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.2rem; }
+      .stats-row { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .cta-section .section-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cursor Glow -->
+  <div id="cursorGlow"></div>
+  <!-- HEADER -->
+  <header class="header" id="mainHeader">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">LF</div>
+        Lifetime Fitness
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#facilities">Facilities</a></li>
+        <li><a href="#trainers">Trainers</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="tel:09999940022" class="nav-cta">Book Trial</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-video-wrap">
+      <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=80">
+        <source src="https://videos.pexels.com/video-files/4761434/4761434-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <div class="hero-eyebrow">The Luxury Fitness Studio &#8212; Muzaffarpur</div>
+      <h1 class="hero-title">
+        <span class="line"><span class="line-inner">Redefine</span></span>
+        <span class="line"><span class="line-inner">Your Limits.</span></span>
+      </h1>
+      <div class="hero-bottom">
+        <div class="hero-cta-wrap">
+          <a href="tel:09999940022" class="hero-cta">
+            Book Your Trial <span class="arrow">&#8594;</span>
+          </a>
+          <div class="hero-cta-outline"></div>
+        </div>
+        <div class="rating-pill">
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span>4.9</span>
+          <span class="divider"></span>
+          <span>241 Reviews</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Strength <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Discipline <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Results <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Muzaffarpur's Best <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Premium Training <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Elite Coaches <span class="marquee-dot"></span></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">Strength <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Discipline <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Results <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Muzaffarpur's Best <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Premium Training <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Elite Coaches <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text-col">
+          <div class="section-label reveal">Who We Are</div>
+          <h2 class="section-title reveal">
+            Where <span class="gold">Luxury</span> Meets<br/>Performance
+          </h2>
+          <p class="about-description reveal">
+            Lifetime Fitness isn't just a gym &#8212; it's a statement. Built for those who refuse 
+            mediocrity, our studio combines world-class equipment, cinematic interiors, and 
+            trainers who've shaped champions. Every detail, from the ambient lighting to the 
+            curated playlists, is designed to elevate your experience beyond anything you've 
+            known in Muzaffarpur.
+          </p>
+          <div class="about-stats reveal">
+            <div>
+              <div class="about-stat-number" data-count="7">0</div>
+              <div class="about-stat-label">Years of Excellence</div>
+            </div>
+            <div>
+              <div class="about-stat-number" data-count="241">0</div>
+              <div class="about-stat-label">5-Star Reviews</div>
+            </div>
+            <div>
+              <div class="about-stat-number" data-count="3000">0</div>
+              <div class="about-stat-label">Members Strong</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-image-col reveal-right">
+          <div class="about-image-wrap">
+            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80" alt="Lifetime Fitness Gym interior" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FACILITIES -->
+  <section class="section" id="facilities">
+    <div class="container">
+      <div class="facilities-header">
+        <div>
+          <div class="section-label reveal">World-Class Equipment</div>
+          <h2 class="section-title reveal">Our <span class="gold">Facilities</span></h2>
+        </div>
+      </div>
+      <div class="facilities-scroll reveal">
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=600&q=80" alt="Cardio Zone" loading="lazy" />
+          <div class="facility-card-overlay">
+            <div class="facility-number">01</div>
+            <div class="facility-name">Cardio Arena</div>
+            <div class="facility-desc">State-of-the-art treadmills, ellipticals &amp; bikes</div>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" alt="Strength Zone" loading="lazy" />
+          <div class="facility-card-overlay">
+            <div class="facility-number">02</div>
+            <div class="facility-name">Strength Vault</div>
+            <div class="facility-desc">Full complement of machines &amp; plate-loaded equipment</div>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=600&q=80" alt="Free Weights" loading="lazy" />
+          <div class="facility-card-overlay">
+            <div class="facility-number">03</div>
+            <div class="facility-name">Free Weights</div>
+            <div class="facility-desc">Dumbbells, barbells &amp; Olympic lifting platforms</div>
+          </div>
+        </div>
+        <div class="facility-card">
+          <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=600&q=80" alt="Functional Zone" loading="lazy" />
+          <div class="facility-card-overlay">
+            <div class="facility-number">04</div>
+            <div class="facility-name">Functional Zone</div>
+            <div class="facility-desc">Battle ropes, TRX, kettlebells &amp; turf area</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item reveal">
+          <div class="stat-number" data-count="5000">0</div>
+          <div class="stat-label">Sq. Ft. Area</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-number" data-count="120">0</div>
+          <div class="stat-label">Equipment</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-number" data-count="4.9">0</div>
+          <div class="stat-label">Google Rating</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-number" data-count="18">0</div>
+          <div class="stat-label">Hours Open Daily</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- TRAINERS -->
+  <section class="section" id="trainers">
+    <div class="container">
+      <div class="section-label reveal">Meet The Team</div>
+      <h2 class="section-title reveal">Elite <span class="gold">Trainers</span></h2>
+      <div class="trainers-grid">
+        <div class="trainer-card reveal">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=500&q=80" alt="Vikram Singh" loading="lazy" />
+          <div class="trainer-info">
+            <div class="trainer-name">Vikram Singh</div>
+            <div class="trainer-role">Head Strength Coach</div>
+            <div class="trainer-gold-bar"></div>
+          </div>
+        </div>
+        <div class="trainer-card reveal">
+          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=500&q=80" alt="Priya Sharma" loading="lazy" />
+          <div class="trainer-info">
+            <div class="trainer-name">Priya Sharma</div>
+            <div class="trainer-role">HIIT &amp; Functional Specialist</div>
+            <div class="trainer-gold-bar"></div>
+          </div>
+        </div>
+        <div class="trainer-card reveal">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=500&q=80" alt="Rohit Verma" loading="lazy" />
+          <div class="trainer-info">
+            <div class="trainer-name">Rohit Verma</div>
+            <div class="trainer-role">Bodybuilding &amp; Nutrition Expert</div>
+            <div class="trainer-gold-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials-section" id="testimonials">
+    <div class="container">
+      <div class="section-label reveal">What Members Say</div>
+      <h2 class="section-title reveal">Real <span class="gold">Results.</span> Real Stories.</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal" data-tilt>
+          <div class="testimonial-stars">
+            <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+          </div>
+          <p class="testimonial-quote">
+            "Walking into Lifetime Fitness feels like stepping into a premium studio in Mumbai. 
+            The trainers don't just count reps &#8212; they transform your mindset. 6 months in, and 
+            I've never been stronger."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AS</div>
+            <div>
+              <div class="testimonial-author-name">Anjali Sinha</div>
+              <div class="testimonial-author-detail">Member since 2023</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" data-tilt>
+          <div class="testimonial-stars">
+            <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+          </div>
+          <p class="testimonial-quote">
+            "The dark, cinematic vibe with gold accents genuinely motivates me. Equipment is 
+            top-notch, hygiene is impeccable, and the community is supportive yet competitive. 
+            Exactly what Muzaffarpur needed."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">RK</div>
+            <div>
+              <div class="testimonial-author-name">Rahul Kumar</div>
+              <div class="testimonial-author-detail">Member since 2022</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" data-tilt>
+          <div class="testimonial-stars">
+            <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+          </div>
+          <p class="testimonial-quote">
+            "Lost 15 kg in 4 months under Vikram's guidance. The personalized nutrition plan 
+            and accountability system are what set this gym apart. It's not just a gym &#8212; 
+            it's a lifestyle upgrade."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SP</div>
+            <div>
+              <div class="testimonial-author-name">Sunita Prasad</div>
+              <div class="testimonial-author-detail">Member since 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA BANNER -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="section-label reveal" style="justify-content:center;">Your Move</div>
+      <h2 class="section-title reveal">
+        Your Best Body<br/><span class="gold">Starts Here.</span>
+      </h2>
+      <div class="reveal">
+        <a href="tel:09999940022" class="cta-big-btn">
+          Book Your Free Trial <span class="arrow">&#8594;</span>
+        </a>
+      </div>
+      <p class="cta-phone reveal">
+        Or call directly: <a href="tel:09999940022">099999 40022</a>
+      </p>
+    </div>
+  </section>
+  <!-- CONTACT / MAP -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-label reveal">Find Us</div>
+      <h2 class="section-title reveal">Get In <span class="gold">Touch</span></h2>
+      <div class="contact-grid">
+        <div class="map-wrap reveal-left">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.85!2d85.37!3d26.12!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDA3JzEyLjAiTiA4NcKwMjInMTIuMCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Lifetime Fitness Gym Location"
+          ></iframe>
+        </div>
+        <div class="contact-info-card reveal-right">
+          <div class="contact-item">
+            <div class="contact-icon">&#128205;</div>
+            <div>
+              <div class="contact-item-label">Address</div>
+              <div class="contact-item-value">
+                Chakkar Chowk, Tilak Nagar,<br/>
+                Muzaffarpur, Bihar 842001
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">&#128222;</div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <div class="contact-item-value">
+                <a href="tel:09999940022">099999 40022</a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">&#9200;</div>
+            <div>
+              <div class="contact-item-label">Hours</div>
+              <div class="contact-item-value">
+                Mon &#8211; Sun: 5:00 AM &#8211; 11:00 PM<br/>
+                <span style="color:var(--gold); font-size:0.85rem;">Open 365 days a year</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">&#128172;</div>
+            <div>
+              <div class="contact-item-label">WhatsApp</div>
+              <div class="contact-item-value">
+                <a href="https://wa.me/919999940022" target="_blank">Chat with us instantly &#8594;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-tagline">Muzaffarpur's Premium Fitness Destination</div>
+      <div class="footer-socials">
+        <a href="#" class="footer-social-link" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="footer-social-link" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="footer-social-link" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+        </a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Lifetime Fitness Gym. All rights reserved.</div>
+    </div>
+  </footer>
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <a href="https://wa.me/919999940022" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+  <!-- SCRIPTS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // -- CURSOR GLOW --
+      const glow = document.getElementById('cursorGlow');
+      let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        glow.classList.add('active');
+      });
+      // Smooth follow with lerp
+      function animateGlow() {
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+      }
+      animateGlow();
+      // Expand glow on interactive elements
+      document.querySelectorAll('a, button, .facility-card, .trainer-card, .testimonial-card').forEach(el => {
+        el.addEventListener('mouseenter', () => glow.classList.add('expand'));
+        el.addEventListener('mouseleave', () => glow.classList.remove('expand'));
+      });
+      // -- STICKY HEADER --
+      const header = document.getElementById('mainHeader');
+      const onScroll = () => {
+        header.classList.toggle('scrolled', window.scrollY > 60);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      // -- MOBILE MENU --
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
+      // -- SMOOTH SCROLL --
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          const target = document.querySelector(anchor.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+      // -- SCROLL REVEAL (IntersectionObserver fallback, GSAP enhances if loaded) --
+      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        // Hero animations with GSAP
+        const heroTl = gsap.timeline({ delay: 0.5 });
+        heroTl
+          .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+          .to('.hero-title .line-inner', {
+            y: '0%',
+            duration: 1,
+            ease: 'power4.out',
+            stagger: 0.15
+          }, '-=0.4')
+          .to('.hero-bottom', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+          .to('.hero-scroll-indicator', { opacity: 1, duration: 0.6 }, '-=0.3');
+        // Section reveals with GSAP ScrollTrigger
+        reveals.forEach((el) => {
+          const direction = el.classList.contains('reveal-left') ? { x: -60 } :
+                            el.classList.contains('reveal-right') ? { x: 60 } :
+                            { y: 60 };
+          el.classList.remove('reveal', 'reveal-left', 'reveal-right');
+          gsap.from(el, {
+            ...direction,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          });
+        });
+      } else {
+        // Fallback: Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        reveals.forEach(el => observer.observe(el));
+        // Hero fallback animations
+        setTimeout(() => {
+          document.querySelector('.hero-eyebrow').style.opacity = 1;
+          document.querySelectorAll('.hero-title .line-inner').forEach((el, i) => {
+            setTimeout(() => { el.style.transform = 'translateY(0)'; }, i * 150);
+          });
+          setTimeout(() => { document.querySelector('.hero-bottom').style.opacity = 1; }, 600);
+          setTimeout(() => { document.querySelector('.hero-scroll-indicator').style.opacity = 1; }, 900);
+        }, 300);
+      }
+      // -- COUNT-UP ANIMATION --
+      const countElements = document.querySelectorAll('[data-count]');
+      const countObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseFloat(el.getAttribute('data-count'));
+            const isFloat = target % 1 !== 0;
+            const duration = 2000;
+            const start = performance.now();
+            function easeOutQuart(t) {
+              return 1 - Math.pow(1 - t, 4);
+            }
+            function update(now) {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const easedProgress = easeOutQuart(progress);
+              const current = target * easedProgress;
+              if (isFloat) {
+                el.textContent = current.toFixed(1);
+              } else {
+                el.textContent = Math.floor(current).toLocaleString();
+              }
+              if (progress < 1) {
+                requestAnimationFrame(update);
+              } else {
+                el.textContent = isFloat ? target.toFixed(1) : target.toLocaleString();
+              }
+            }
+            requestAnimationFrame(update);
+            obs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+      countElements.forEach(el => countObserver.observe(el));
+      // -- TESTIMONIAL CARD TILT (dynamic shadows) --
+      document.querySelectorAll('[data-tilt]').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / centerY * -8;
+          const rotateY = (x - centerX) / centerX * 8;
+          card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+          card.style.boxShadow = (rotateY * -2) + 'px ' + (rotateX * 2) + 'px 30px rgba(0,0,0,0.3), ' + (rotateY * -1) + 'px ' + (rotateX * 1) + 'px 60px rgba(201, 162, 39, 0.06)';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+          card.style.boxShadow = 'none';
+          card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+        card.addEventListener('mouseenter', () => {
+          card.style.transition = 'none';
+        });
+      });
+      // -- PARALLAX (subtle) --
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            const heroVideo = document.querySelector('.hero-video-wrap video');
+            if (heroVideo) {
+              heroVideo.style.transform = 'translateY(' + (scrollY * 0.3) + 'px) scale(1.1)';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    });
+  </script>
+</body>
+</html>
